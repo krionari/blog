@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Catégorie d'article selectionnée: {{ category.name }}</h1>
+
+    {% for article in articles %}
+        <p>Article n°{{ article.id }} : {{ article.title|capitalize }}.</p>
+        <p>{{ article.content }}</p></br>
+    {% endfor %}
+
+{% endblock %}
