@@ -65,6 +65,7 @@ class BlogController extends AbstractController
         return $this->render('blog/show.html.twig', [
             'slug' => ucwords(str_replace('-', ' ',($slug))),
             'article' => $article,
+            'category' => $article->getCategory()
         ]);
     }
 
