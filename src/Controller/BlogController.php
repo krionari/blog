@@ -69,23 +69,27 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @param string $scategoryName
+     * @param string $categoryName
      * @Route("/category/{categoryName}", requirements={"categoryName"="[a-zA-Z0-9-]+"}, name="_category")
      * @return Response A response instance
      */
     public function showByCategory(string $categoryName): Response
     {
-        $category = $this->getDoctrine()
+
+       $category = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findOneBy(['name' => $categoryName]);
 
+        $articles = $category->getArticles();
+/*
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findBy(
                 ['category' => $category],
                 ['id' => 'Desc'],
                 3
-                );
+                ); */
+
 
         if (!$category) {
             throw $this->createNotFoundException(
