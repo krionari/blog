@@ -70,28 +70,29 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @param string $categoryName
-     * @Route("/category/{categoryName}", requirements={"categoryName"="[a-zA-Z0-9-]+"}, name="_category")
+     * @param object $category
+     * @Route("/category/{name}", requirements={"name"="[a-zA-Z0-9-]+"}, name="_category")
      * @return Response A response instance
      */
-    public function showByCategory(string $categoryName): Response
+    public function showByCategory(Category $category): Response
     {
 
-       $category = $this->getDoctrine()
+
+      /* $category = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findOneBy(['name' => $categoryName]);
 
         $articles = $category->getArticles();
-/*
+      -------------------------------------------*/
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findBy(
                 ['category' => $category],
                 ['id' => 'Desc'],
                 3
-                ); */
+                );
 
-
+/*
         if (!$category) {
             throw $this->createNotFoundException(
                 'No category with ' . $category . ' title, found in article\'s table.'
@@ -102,7 +103,7 @@ class BlogController extends AbstractController
             throw $this->createNotFoundException(
                 'No category with ' . $category . ' title, found in article\'s table.'
             );
-        }
+        }  */
 
         return $this->render('blog/category.html.twig', [
             'category' => $category,
