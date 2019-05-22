@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Form\ArticleSearchType;
+use App\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +24,10 @@ class BlogController extends AbstractController
      */
     public function index(): Response
     {
+        $form = $this->createForm(ArticleSearchType::class, null, ['method' => Request::METHOD_GET]);
+        $category = new Category();
+        $formCategory = $this->createForm(CategoryType::class, $category);
+
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findAll();
@@ -31,6 +38,8 @@ class BlogController extends AbstractController
 
         return $this->render('blog/index.html.twig', [
             'articles' => $articles,
+            'form' => $form->createView(),
+            'formCategory' => $formCategory->createView()
         ]);
     }
 
@@ -71,7 +80,7 @@ class BlogController extends AbstractController
 
     /**
      * @param object $category
-     * @Route("/category/{name}", requirements={"name"="[a-zA-Z0-9-]+"}, name="_category")
+     * @Route("/category/{name}", requirements={"name"="[a-zA-Z0-9-+]+"}, name="category")
      * @return Response A response instance
      */
     public function showByCategory(Category $category): Response
@@ -80,30 +89,30 @@ class BlogController extends AbstractController
 
       /* $category = $this->getDoctrine()
             ->getRepository(Category::class)
-            ->findOneBy(['name' => $categoryName]);
+            ->findOneBy(['name' => $categoryName]); */
 
         $articles = $category->getArticles();
-      -------------------------------------------*/
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy(
-                ['category' => $category],
-                ['id' => 'Desc'],
-                3
-                );
+        /* -------------------------------------------
+          $articles = $this->getDoctrine()
+              ->getRepository(Article::class)
+              ->findBy(
+                  ['category' => $category],
+                  ['id' => 'Desc'],
+                  3
+                  );
 
-/*
-        if (!$category) {
-            throw $this->createNotFoundException(
-                'No category with ' . $category . ' title, found in article\'s table.'
-            );
-        }
+  /*
+          if (!$category) {
+              throw $this->createNotFoundException(
+                  'No category with ' . $category . ' title, found in article\'s table.'
+              );
+          }
 
-        if (!$articles) {
-            throw $this->createNotFoundException(
-                'No category with ' . $category . ' title, found in article\'s table.'
-            );
-        }  */
+          if (!$articles) {
+              throw $this->createNotFoundException(
+                  'No category with ' . $category . ' title, found in article\'s table.'
+              );
+          }  */
 
         return $this->render('blog/category.html.twig', [
             'category' => $category,

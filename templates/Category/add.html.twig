@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    {{ form_start(formCategory) }}
+    {{ form_row(formCategory.name) }}
+    <button type="submit" name="name">Save</button>
+    {{ form_end(formCategory) }}
+{%  endblock %}
