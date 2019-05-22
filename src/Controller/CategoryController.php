@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("", name="_category")
+     * @Route("/add", name="_category")
      * @return Response A response instance
      */
     public function add(Request $request): Response
@@ -37,6 +37,8 @@ class CategoryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
+
+            return $this->redirectToRoute('blog__category');
 
         }
 
