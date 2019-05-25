@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 use App\Form\ArticleSearchType;
 use App\Form\CategoryType;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,10 +46,10 @@ class BlogController extends AbstractController
 
     /**
      * @param string $slug
-     * @Route("/show/{slug}", requirements={"slug"="[a-z0-9-]+"}, name="show")
+     * @Route("/show/{slug}", requirements={"slug"="[a-z A-Z0-9-]+"}, name="show")
      * @return Response A response instance
      */
-    public function show(?string $slug = 'article sans titre')
+    public function show(?string $slug = 'article sans titre'): Response
     {
         if (!$slug) {
             throw $this
@@ -64,6 +65,8 @@ class BlogController extends AbstractController
             ->getRepository(Article::class)
             ->findOneBy(['title' => mb_strtolower($slug)]);
 
+        $tags = $article->getTags();
+
 
         if (!$article) {
             throw $this->createNotFoundException(
@@ -74,13 +77,14 @@ class BlogController extends AbstractController
         return $this->render('blog/show.html.twig', [
             'slug' => ucwords(str_replace('-', ' ',($slug))),
             'article' => $article,
+            'tags' => $tags,
             'category' => $article->getCategory()
         ]);
     }
 
     /**
      * @param object $category
-     * @Route("/category/{name}", requirements={"name"="[a-zA-Z0-9-+]+"}, name="category")
+     * @Route("/category/{name}", requirements={"name"="[a-z A-Z0-9-+]+"}, name="category")
      * @return Response A response instance
      */
     public function showByCategory(Category $category): Response
@@ -118,5 +122,18 @@ class BlogController extends AbstractController
             'category' => $category,
             'articles' => $articles
         ]);
+    }
+
+    /**
+     * @param Tag $tag
+     * @return Response
+     * @Route("/tag/{name}", requirements={"name"="[a-zA-Z0-9-+]+"}, name="tag")
+     */
+    public function showByTag(Tag $tag): Response
+    {
+        $articles = $tag->getArticles();
+
+        return $this->render('blog/tag.html.twig', ['articles' => $articles , 'tag' => $tag]);
+
     }
 }

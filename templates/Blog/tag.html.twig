@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Tag selectionné: {{ tag.name }}</h1>
+
+    {% for article in articles %}
+        <p>Article n°{{ article.id }} : <a href="{{ path('blog_show' , {'slug': article.title }) }}">{{ article.title|capitalize }}</a></p>
+        <p>{{ article.content }}</p></br>
+    {% endfor %}
+
+
+{% endblock %}
