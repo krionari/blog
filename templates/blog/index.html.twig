@@ -4,7 +4,7 @@
 {% block title %}All articles{% endblock %}
 
 {% block body %}
-    <h1>All articles from article s table : </h1>
+    <div class="jumbotron text-center"><h1> All articles from article s table : </h1></div>
     {% for article in articles %}
         <div>
             <h2>{{ loop.index }} / {{ article.title }} - Category : <a href="{{ path('blog_category', {'name': article.category.name }) }}">{{ article.category.name }}</a></h2>
