@@ -21,7 +21,8 @@ class ArticleType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'expanded' => true,
-                'multiple' => true
+                'multiple' => true,
+                'by_reference' => false
             ]);
             //->add('tags', null, ['choice_label' => 'name'])
         ;
