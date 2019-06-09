@@ -23,8 +23,8 @@ class ArticleType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'by_reference' => false
-            ]);
-            //->add('tags', null, ['choice_label' => 'name'])
+            ])
+        //->add('tags', null, ['choice_label' => 'name'])
         ;
     }
 
