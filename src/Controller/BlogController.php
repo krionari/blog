@@ -84,7 +84,7 @@ class BlogController extends AbstractController
 
     /**
      * @param object $category
-     * @Route("/category/{name}", requirements={"name"="[a-z A-Z0-9-+]+"}, name="category")
+     * @Route("/category/{name}", requirements={"name"="[a-z A-Z\.0-9-_+]+"}, name="category")
      * @return Response A response instance
      */
     public function showByCategory(Category $category): Response
