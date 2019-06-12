@@ -2,3 +2,7 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+
+    paths:
+        # point this wherever your css files live
+        '%kernel.project_dir%/public/build': css

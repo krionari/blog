@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {{ encore_entry_link_tags('app') }}
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+
+
+<body>
+<header>
+
+    <h1 style="color: rebeccapurple; font-size: 50px" >
+        We got a new article for you, Bro !</h1>
+
+</header>
+
+<section>
+    <p>Click pour en apprendre plus sur : <a href="http://localhost:8000{{ path('article_show', {'id': article.id}) }}">{{ article.title }}</a>.</p>
+</section>
+
+<footer>
+   <p style="color: rebeccapurple; font-size: 30px">SEE YOU !!</p>
+</footer>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>
