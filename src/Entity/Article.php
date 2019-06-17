@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ * @UniqueEntity("title", message="Ce titre {{ value }} existe déja.")
  */
 class Article
 {
@@ -19,11 +22,19 @@ class Article
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Remplir d'urgence ce champs")
+     * @Assert\Length(max="255")
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @Assert\NotBlank(message="Remplir d'urgence ce champs")
+     * @Assert\Regex(
+     *     pattern="/\bdigital\b/",
+     *     match=false,
+     *     message="en français, il faut dire numérique"
+     * )
      * @ORM\Column(type="text")
      */
     private $content;
