@@ -11,7 +11,9 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Content</th>
+                <th>Category</th>
                 <th>Tags</th>
+                <th>Slug</th>
             </tr>
         </thead>
         <tbody>
@@ -20,9 +22,10 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.content }}</td>
+                <td>{{ article.category.name }}</td>
                 <td>{% for tag in article.tags %}
                         {{ tag.name }}
-                {% endfor %}</td>
+                    {% endfor %}</td>
                 <td>{{ article.slug }}</td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
