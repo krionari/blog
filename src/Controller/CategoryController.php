@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Category;
 use App\Form\ArticleSearchType;
 use App\Form\CategoryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +22,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/add", name="_category")
      * @return Response A response instance
+     * @IsGranted("ROLE_ADMIN")
      */
     public function add(Request $request): Response
     {

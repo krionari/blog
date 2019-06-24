@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Service\Slugify;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,23 +80,29 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article, Slugify $slugify): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $slugify->generate($article->getTitle());
-            $article->setTitle($slug);
-            $this->getDoctrine()->getManager()->flush();
+        if($this->getUser() === $article->getAuthor() || $this->isGranted('ROLE_ADMIN')){
 
-            return $this->redirectToRoute('article_index', [
-                'id' => $article->getId(),
+            $form = $this->createForm(ArticleType::class, $article);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $slug = $slugify->generate($article->getTitle());
+                $article->setTitle($slug);
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('article_index', [
+                    'id' => $article->getId(),
+                ]);
+            }
+
+            return $this->render('article/edit.html.twig', [
+                'article' => $article,
+                'form' => $form->createView(),
             ]);
+        }else{
+            throw $this->createAccessDeniedException();
         }
-
-        return $this->render('article/edit.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
