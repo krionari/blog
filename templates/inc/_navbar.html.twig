@@ -8,6 +8,15 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('article_index') }}">Articles <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('category_index') }}">Catégories <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('tag_index') }}">Tag<span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
             {% if app.user %}
                 <a class="nav-link" href="{{ path('app_logout') }}">se déconnecter</a>

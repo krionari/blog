@@ -28,7 +28,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for($i=1; $i<51; $i++) {
+        for($i=1; $i<30; $i++) {
             $article = new article();
             $article->setTitle(mb_strtolower($faker->sentence()));
             $article->setContent($faker->text(500));
