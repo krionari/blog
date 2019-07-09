@@ -14,6 +14,8 @@
                 <th>Category</th>
                 <th>Tags</th>
                 <th>Slug</th>
+                <th>parcourir/éditer</th>
+                <th>Favori</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +32,30 @@
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+                </td>
+                <td>
+                    {#<script>
+                        function addToFavorite() {
+                            fetch('{{ path('article_favorite', {'id': article.id}) }}')
+                                .then(response => response.json())
+                                .then(json => {
+                                    let favoriteElt = document.getElementsByClassName(article.id);
+                                    if (json.isFavorite) {
+                                        favoriteElt.classList.remove('far');
+                                        favoriteElt.classList.add('fas');
+                                    }
+                                    else {
+                                        favoriteElt.classList.remove('fas');
+                                        favoriteElt.classList.add('far');
+                                    }
+                                });
+                        }
+
+                    </script>
+                    <a onclick="addToFavorite()">
+                        {{ isFavorite ? '<i class={{"fas fa-heart #{article.id}"}}></i>' : '<i class={{"far fa-heart #{article.id}"}}></i>' }}
+                    </a>#}
+
                 </td>
             </tr>
         {% else %}
